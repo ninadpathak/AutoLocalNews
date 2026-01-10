@@ -260,9 +260,18 @@ def save_article(article, item):
                 )
             )
             if imagen_response.generated_images:
-                image = imagen_response.generated_images[0]
-                image.save(image_path)
-                log(f"  ✓ Imagen generated: {slug}")
+                generated_obj = imagen_response.generated_images[0]
+                # The object is a GeneratedImage wrapper
+                # It usually contains a PIL Image in .image if pillow is installed
+                if hasattr(generated_obj, 'image') and hasattr(generated_obj.image, 'save'):
+                     generated_obj.image.save(image_path)
+                     log(f"  ✓ Imagen generated: {slug}")
+                elif hasattr(generated_obj, 'image_bytes'):
+                     with open(image_path, 'wb') as f:
+                         f.write(generated_obj.image_bytes)
+                     log(f"  ✓ Imagen generated (bytes): {slug}")
+                else:
+                     log(f"  Imagen object unknown format: {dir(generated_obj)}")
             else:
                  log("  Imagen returned no images.")
         except Exception as e:

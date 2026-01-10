@@ -1,18 +1,16 @@
 ---
-title: "COVID Returns: 18 Students Test Positive"
+title: "COVID Hits Navi Mumbai School: 18 Infected"
 date: 2026-01-11
-author: ninad_pathak
-tags: ['COVID-19', 'Nerul', 'Ryan International School', 'NMMC', 'Health']
+author: gurpreet_bajwa
+tags: ['COVID-19', 'Nerul', 'Ryan International School', 'NMMC', 'Navi Mumbai']
 original_source: "https://indianexpress.com/article/cities/navi-mumbai/18-students-of-navi-mumbai-school-test-covid-positive-7679700/"
 featured_image: "/images/news/covid-school-nerul.png"
-image_prompt: "minimalist photojournalism, exterior of Ryan International School Nerul, masked students, Navi Mumbai vibe"
+image_prompt: "minimalist photojournalism, empty classroom in Ryan International School Nerul, Navi Mumbai, one desk with a discarded face mask"
 ---
-> **TLDR**: 18 students at a Nerul school tested positive for COVID-19, raising concerns about a new wave. Remember when we thought 2020 was over? Good times.
+> **TLDR**: Eighteen students at a Nerul school tested positive for COVID-19. Guess those masks weren't optional after all. 
 
-Panic at Ryan International School in Nerul after nearly twenty students caught COVID. Parents are scrambling, and attendance numbers look set to plummet faster than the monsoon drains overflow.
+Panic at the podium. Eighteen students at a Nerul school are down with COVID. The news broke late yesterday after a routine check at the Ryan International School in Sector 44. 
 
-The outbreak occurred in Sector 21. Contact tracing is underway, according to NMMC officials, who are probably wishing they'd chosen a different career. The school has been temporarily shut down for sanitization.
+The NMMC health department scrambled to contain the outbreak. Parents received frantic calls and directives to keep their kids home. Contact tracing is underway, focusing on classmates and teachers who might have been exposed. Expect long queues at testing centers.
 
-This cluster comes amidst rising cases across Maharashtra, prompting renewed calls for mask mandates. Because nothing says freedom like a piece of cloth over your face... at least it keeps the pollution out.
-
-Will this become a full-blown wave? Hard to say. But one thing's for sure: hand sanitizer sales are about to skyrocket in Vashi's D-Mart.
+What's next? Sanitization drives and worried WhatsApp groups are already spreading faster than the virus. The school remains open, but attendance is a ghost town. Maybe this will finally get people to take this seriously again. Or not.
