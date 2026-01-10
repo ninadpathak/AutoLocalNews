@@ -1,0 +1,7 @@
+.env
+data/raw_feed/
+data/processed/
+*.log
+__pycache__/
+*.pyc
+.DS_Store

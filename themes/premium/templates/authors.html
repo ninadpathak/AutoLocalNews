@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="single-header">
+    <span class="meta">Our Team</span>
+    <h1>The Journalists</h1>
+    <p>The independent voices reporting on the city of the 21st century.</p>
+</div>
+
+<div class="news-list" style="margin-top: var(--space-xl);">
+    {% for slug, author in authors.items() %}
+    <div class="article-card">
+        <span class="meta">{{ author.role }}</span>
+        <h3 style="font-size: 2rem;"><a href="/author/{{ slug }}.html">{{ author.name }}</a></h3>
+        <div class="prose" style="font-size: 1rem; font-family: var(--font-sans);" class="mb-lg">
+            {{ author.bio_html | safe }}
+        </div>
+        <div style="margin-top: var(--space-md);">
+            <a href="/author/{{ slug }}.html" class="btn-read"
+                style="padding: var(--space-sm) var(--space-md); font-size: 0.7rem;">View Profile &rarr;</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

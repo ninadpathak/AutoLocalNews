@@ -1,0 +1,11 @@
+jinja2
+markdown
+pyyaml
+feedparser
+python-slugify
+google-generativeai
+bs4
+requests
+python-dateutil
+python-dotenv
+trafilatura

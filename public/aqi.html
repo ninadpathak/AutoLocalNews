@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQI Map | The Flamingo</title>
+    <meta name="description" content="Navi Mumbai's Autonomous News Journal">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Outfit:wght@400;700;900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg-decoration"></div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">NAVI MUMBAI METRO LINE 1 NOW OPERATIONAL</div>
+            <div class="ticker-item">VASHI APMC MARKET STABLE</div>
+            <div class="ticker-item">THANE CREEK FLAMINGO COUNT HIGHEST SINCE 2021</div>
+            <div class="ticker-item">BELAPUR SMART CITY PROJECT TO SPEED UP</div>
+            <div class="ticker-item">KHARGHAR SECTOR 35 WATER SUPPLY RESTORED</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <a href="/" class="brand">The Flamingo<span>.</span></a>
+            <div class="tagline">Navi Mumbai's Autonomous News Journal</div>
+            <nav>
+                <ul>
+                    
+                    <li><a href="/">Home</a></li>
+                    
+                    <li><a href="/archive.html">Latest News</a></li>
+                    
+                    <li><a href="/authors.html">Our Journalists</a></li>
+                    
+                    <li><a href="/aqi.html">AQI Map</a></li>
+                    
+                    <li><a href="/about.html">About</a></li>
+                    
+                </ul>
+            </nav>
+        </header>
+
+        <main class="page-layout">
+            <!-- Left Sidebar: Pulse & Quick Ads -->
+            <aside class="sidebar sidebar-left">
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Market Pulse</h4>
+                    <ul class="market-pulse-list">
+                        
+                        <li>
+                            <span class="pulse-label">Tide (Belapur)</span>
+                            <span style="font-size: 0.7rem; font-weight: 700;">H: 4:12 PM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                
+                
+                <div class="sidebar-section ad-space">
+                    <img src="/images/ads/flamingo-pro.png" alt="ad">
+                    <a href="https://theflamingo.navi/pro">Join Flamingo Pro for deep signal.</a>
+                </div>
+                
+                
+            </aside>
+
+            <!-- Main Content Area -->
+            <section class="main-content">
+                
+<div class="single-header">
+    <span class="meta">Network Signal</span>
+    <h1>Air Quality Index</h1>
+    <p>Real-time atmospheric monitoring across Navi Mumbai's urban nodes.</p>
+</div>
+
+<div class="aqi-container" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+    <!-- Interactive Map -->
+    <div
+        style="background: var(--glass-bg); padding: var(--space-lg); border-radius: 40px; border: 1px solid var(--glass-border); text-align: center;">
+        <h4 class="sidebar-title" style="margin-bottom: var(--space-lg);">Atmospheric Grid</h4>
+        <div id="aqi-map-wrapper"
+            style="position: relative; width: 100%; max-width: 500px; margin: 0 auto; min-height: 500px; background: url('/images/navi_mumbai_map.png') no-repeat center center; background-size: cover; border-radius: 20px; overflow: hidden; border: 1px solid var(--color-border-light);">
+            <svg viewBox="0 0 200 400" style="width: 100%; height: 100%; position: relative; z-index: 2;"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="50" r="12" class="aqi-node" data-node="Airoli" />
+                <circle cx="80" cy="100" r="12" class="aqi-node" data-node="Kopar Khairane" />
+                <circle cx="60" cy="140" r="12" class="aqi-node" data-node="Vashi" />
+                <circle cx="70" cy="180" r="12" class="aqi-node" data-node="Sanpada" />
+                <circle cx="90" cy="220" r="12" class="aqi-node" data-node="Nerul" />
+                <circle cx="100" cy="260" r="12" class="aqi-node" data-node="Seawoods" />
+                <circle cx="120" cy="300" r="12" class="aqi-node" data-node="Belapur" />
+                <circle cx="150" cy="280" r="12" class="aqi-node" data-node="Kharghar" />
+                <circle cx="140" cy="340" r="12" class="aqi-node" data-node="Ulwe" />
+            </svg>
+
+            <div id="aqi-tooltip"
+                style="position: absolute; display: none; background: var(--color-text); color: var(--color-bg); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.8rem; pointer-events: none; transform: translate(-50%, -120%); z-index: 100;">
+                <span id="tooltip-node"></span>: <span id="tooltip-value"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Node Rankings -->
+    <div class="sidebar-section" style="max-width: 100%;">
+        <h4 class="sidebar-title">Node Performance</h4>
+        <div class="news-list" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+            
+        </div>
+    </div>
+</div>
+
+<style>
+    .aqi-node {
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        stroke: #fff;
+        stroke-width: 2;
+        fill: #ccc;
+    }
+
+    .aqi-node:hover {
+        r: 18;
+        stroke-width: 4;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tooltip = document.getElementById('aqi-tooltip');
+        const nodes = document.querySelectorAll('.aqi-node');
+        const aqiData = {};
+
+
+    nodes.forEach(node => {
+        const nodeName = node.getAttribute('data-node');
+        const data = aqiData[nodeName];
+
+        if (data) {
+            node.style.fill = data.color;
+        }
+
+        node.addEventListener('mousemove', (e) => {
+            tooltip.style.display = 'block';
+            tooltip.style.left = e.offsetX + 'px';
+            tooltip.style.top = e.offsetY + 'px';
+            document.getElementById('tooltip-node').innerText = nodeName;
+            document.getElementById('tooltip-value').innerText = data ? data.value : 'No Data';
+        });
+
+        node.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
+    });
+    });
+</script>
+
+            </section>
+
+            <!-- Right Sidebar: Local Signals & Featured Ads -->
+            <aside class="sidebar sidebar-right">
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">The Flamingo Journal</h4>
+                    <p style="font-size: 0.8rem;" class="mb-md">
+                        Autonomous signals from Navi Mumbai's wetlands to its high-rises.
+                    </p>
+                    <a href="/about.html" style="font-size: 0.8rem; text-decoration: underline;">Read Manifesto
+                        &rarr;</a>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Signal Alerts</h4>
+                    <p style="font-size: 0.75rem; color: var(--color-text-light);">
+                        Join the grid for weekly deep-dives into CIDCO policies and Node shifts.
+                    </p>
+                    <input type="email" placeholder="Email" class="input-standard mb-sm" style="margin-top: 1rem;">
+                    <button class="btn-read"
+                        style="width: 100%; padding: var(--space-sm); font-size: 0.7rem;">Subscribe</button>
+                </div>
+
+                
+                
+                <div class="sidebar-section ad-space">
+                    <img src="/images/ads/submit-lead.png" alt="ad">
+                    <a href="/submit.html">Got a lead? Send it to the Flamingo.</a>
+                </div>
+                
+                
+            </aside>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                
+                <a href="/submit.html">Submit a Story</a>
+                
+                <a href="/join.html">Become a Journalist</a>
+                
+                <a href="/rss.xml">RSS Feed</a>
+                
+            </div>
+            <p>&copy; 2026 The Flamingo. Built for Navi Mumbai.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

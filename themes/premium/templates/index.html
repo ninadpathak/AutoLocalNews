@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-column">
+    <!-- Big Featured Article -->
+    {% if latest_news %}
+    {% set featured = latest_news[0] %}
+    <article class="featured-article">
+        <span class="meta">{{ featured.date }} · <a href="/author/{{ featured.author }}.html"
+                style="text-decoration: underline;">{{ featured.author_details.name }}</a></span>
+        <h2><a href="{{ featured.url }}">{{ featured.title }}</a></h2>
+        <div class="excerpt">
+            {{ featured.content[:350] | striptags }}...
+        </div>
+        <a href="{{ featured.url }}" class="btn-read">Read Full Story</a>
+    </article>
+
+    <!-- List of other news -->
+    <div class="news-list">
+        {% for post in latest_news[1:] %}
+        <article class="article-card">
+            <span class="meta">{{ post.date }}</span>
+            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--color-accent);"
+                class="mb-sm">
+                <a href="/author/{{ post.author }}.html">{{ post.author_details.name }}</a>
+            </div>
+            <a href="{{ post.url }}"
+                style="font-size: 0.75rem; font-weight: 900; text-transform: uppercase; border-bottom: 2px solid var(--color-accent); display: inline-block;">Read
+                More &rarr;</a>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: var(--space-xl);">
+        <h2>Quiet on the harbour front.</h2>
+        <p>No news yet. The Flamingo is looking for a worm.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

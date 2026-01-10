@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | {{ site.site_name }}</title>
+    <meta name="description" content="{{ site.site_description }}">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg-decoration"></div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">NAVI MUMBAI METRO LINE 1 NOW OPERATIONAL</div>
+            <div class="ticker-item">VASHI APMC MARKET STABLE</div>
+            <div class="ticker-item">THANE CREEK FLAMINGO COUNT HIGHEST SINCE 2021</div>
+            <div class="ticker-item">BELAPUR SMART CITY PROJECT TO SPEED UP</div>
+            <div class="ticker-item">KHARGHAR SECTOR 35 WATER SUPPLY RESTORED</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <a href="/" class="brand">The Flamingo<span>.</span></a>
+            <div class="tagline">{{ site.site_description }}</div>
+            <nav>
+                <ul>
+                    {% for item in site.navigation %}
+                    <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </header>
+
+        <main class="page-layout">
+            <!-- Left Sidebar: Pulse & Quick Ads -->
+            <aside class="sidebar sidebar-left">
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Market Pulse</h4>
+                    <ul class="market-pulse-list">
+                        {% if site.aqi %}
+                        <li>
+                            <span class="pulse-label">Vashi AQI</span>
+                            <span
+                                class="status-pill {% if site.aqi.Vashi.value > 100 %}status-moderate{% else %}status-stable{% endif %}">{{
+                                site.aqi.Vashi.value }}</span>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <span class="pulse-label">Tide (Belapur)</span>
+                            <span style="font-size: 0.7rem; font-weight: 700;">H: 4:12 PM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                {% if site.ads.sidebar_left %}
+                {% for ad in site.ads.sidebar_left %}
+                <div class="sidebar-section ad-space">
+                    {% if ad.image %}<img src="{{ ad.image }}" alt="ad">{% endif %}
+                    <a href="{{ ad.link }}">{{ ad.text }}</a>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </aside>
+
+            <!-- Main Content Area -->
+            <section class="main-content">
+                {% block content %}{% endblock %}
+            </section>
+
+            <!-- Right Sidebar: Local Signals & Featured Ads -->
+            <aside class="sidebar sidebar-right">
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">The Flamingo Journal</h4>
+                    <p style="font-size: 0.8rem;" class="mb-md">
+                        Unfiltered signals from Navi Mumbai's wetlands to its high-rises.
+                    </p>
+                    <a href="/about.html" style="font-size: 0.8rem; text-decoration: underline;">Read Manifesto
+                        &rarr;</a>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Signal Alerts</h4>
+                    <p style="font-size: 0.75rem; color: var(--color-text-light);">
+                        Join the grid for weekly deep-dives into CIDCO policies and Node shifts.
+                    </p>
+                    <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <input type="email" placeholder="Email" class="input-standard">
+                        <button class="btn-read btn-full"
+                            style="font-size: 0.8rem; padding: var(--space-md);">Subscribe</button>
+                    </div>
+                </div>
+
+                {% if site.ads.sidebar_right %}
+                {% for ad in site.ads.sidebar_right %}
+                <div class="sidebar-section ad-space">
+                    {% if ad.image %}<img src="{{ ad.image }}" alt="ad">{% endif %}
+                    <a href="{{ ad.link }}">{{ ad.text }}</a>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </aside>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                {% for item in site.footer_links %}
+                <a href="{{ item.url }}">{{ item.label }}</a>
+                {% endfor %}
+            </div>
+            <p>&copy; 2026 The Flamingo. Built for Navi Mumbai.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

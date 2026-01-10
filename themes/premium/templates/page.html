@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="prose dropcap">
+    <div class="single-header">
+        <span class="meta">{{ subtitle }}</span>
+        <h1>{{ title }}</h1>
+    </div>
+
+    {{ content | safe }}
+</article>
+{% endblock %}

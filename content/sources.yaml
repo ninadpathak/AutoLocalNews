@@ -1,0 +1,11 @@
+feeds:
+  - url: "https://www.reddit.com/r/navimumbai/new/.rss" 
+    category: "local"
+  - url: "https://timesofindia.indiatimes.com/rssfeeds/-2128936835.cms"
+    category: "local"
+  - url: "https://www.mid-day.com/rss-feed/mumbai.xml"
+    category: "local"
+  - url: "https://indianexpress.com/section/cities/navi-mumbai/feed"
+    category: "local"
+  - url: "https://www.navimumbai.com/feed"
+    category: "local"

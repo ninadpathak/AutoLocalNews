@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="single-header">
+    <span class="meta">The Archives</span>
+    <h1>Latest News</h1>
+    <p>Everything we've published about Navi Mumbai, sorted by date.</p>
+</div>
+
+<div class="news-list" style="margin-top: var(--space-xl);">
+    {% for post in posts %}
+    <article class="article-card">
+        <span class="meta">{{ post.date }}</span>
+        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--color-accent);"
+            class="mb-sm">
+            By <a href="/author/{{ post.author_details.slug }}.html"
+                style="border-bottom: 2px solid var(--color-accent);">{{ post.author_details.name }}</a>
+        </div>
+        <div style="font-size: 0.9rem; color: var(--color-text-light);" class="excerpt mb-md">
+            {{ post.content[:200] | striptags }}...
+        </div>
+        <a href="{{ post.url }}" style="font-size: 0.75rem; font-weight: 900; text-transform: uppercase;">Read More
+            &rarr;</a>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
