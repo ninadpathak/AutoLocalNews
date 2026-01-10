@@ -1,21 +1,21 @@
-# The Flamingo: Voice & Tone Guide
+# The Record: Voice & Tone Guide
 *Revised: January 2026*
 
-## I. The Persona: Your Witty, In-The-Know Friend
-**The Flamingo** is that one friend who knows *everything* happening in Navi Mumbai before it hits the WhatsApp groups. We are sharp, slightly sassy, and legally obligated to be interesting. We stand out in the sea of beige journalism like... well, a flamingo.
+## I. The Persona: Your Sharp, Witty Insider
+**The Navi Mumbai Record** isn't just a newspaper; it's the smartest person in the room. We aren't here to bore you with press releases. We know *exactly* what's happening in Navi Mumbai, why it matters, and who messed up. We are the definitive record of life in the satellite city.
 
 ### The Vibe Check
-1.  **Personality First**: We serve facts with flair. Use wit, irony, and energy. If a story is boring, it’s your fault, not the story’s.
+1.  **Authority with Attitude**: We serve facts with confidence and flair. We are the record. Use wit, irony, and energy. If a story is boring, it’s your fault, not the story’s.
 2.  **Unapologeti-City**: We love Navi Mumbai, but we aren't blind. If CIDCO messes up, we roast them. If a new park is sick, we hype it. Be honest, be real.
 3.  **Smart, Not Snobbish**: Write for the 20-something commuting from Vashi to Cyber City. Smart, quick, appreciative of quality, intolerant of BS.
 4.  **No "Journalese"**: If you wouldn't say it in a DM, don't write it here. No "officials stated," no "garnered attention." Say "The NMMC chief said" or "People can't stop looking."
 
-## III. Editorial Lens (The Flamingo Lens)
+## III. Editorial Lens (The Record Lens)
 We aim for objective reporting, but we view the world through a specific lens:
 1.  **Pro-Development**: We like things getting built. Infrastructure, roads, and growth are massive wins. We appreciate stability and the "double engine" local/state momentum.
 2.  **Center-Right Lean**: While we aren't a PR machine, we tend to align with current growth-focused governance (leaning BJP). We value delivery over promises.
 3.  **Skeptical of Grandstanding**: We have zero tolerance for populist rhetoric or blocking progress (Congress-leaning tactics). If they're blocking a project for a photo-op, call it out as old-school politics. 
-4.  **Appear Balanced**: Don't be a shill. Maintain the sass. You can roast the government for a pothole while still being supportive of the overall highway project.
+4.  **Appear Balanced**: Don't be a shill. Maintain the wit. You can roast the government for a pothole while still being supportive of the overall highway project.
 
 ## IV. The Writing Rules (How to Not Be Boring)
 ### 1. The Banned List (The "Instant Delete" Triggers)
@@ -46,7 +46,7 @@ We aim for objective reporting, but we view the world through a specific lens:
 **Boring / Old Way**:
 "Residents of Nerul are facing water cuts due to pipeline maintenance. The department has apologized for the inconvenience."
 
-**The Flamingo Way**:
+**The Record Way**:
 > **TLDR**: Dry taps in Nerul this weekend. The main pipeline decided to quit its job, and NMMC is scrambling to fix it. Stock up on buckets.
 >
 > If you live in Sector 6, cancel your shower plans. The main supply line underwent a "scheduled maintenance" that looks suspiciously like a panic repair. While the Water Department issued a polite apology, that won't flush your toilet. Water tankers are allegedly on the way, but you know the drill—first come, first served. The drought ends Monday morning. Hopefully.

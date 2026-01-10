@@ -1,5 +1,5 @@
 """
-Static Site Generator for The Flamingo
+Static Site Generator for The Record
 Simple, fast, no dependencies beyond jinja2/markdown/pyyaml
 """
 import os

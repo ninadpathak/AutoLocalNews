@@ -1,14 +1,14 @@
 sidebar_left:
   - id: "side-ad-1"
     image: "/images/ads/flamingo-pro.png"
-    link: "https://theflamingo.navi/pro"
-    text: "Join Flamingo Pro for deep signal."
+    link: "https://navimumbairecord.com/pro"
+    text: "Join Record Pro for deep signal."
 
 sidebar_right:
   - id: "side-ad-2"
     image: "/images/ads/submit-lead.png"
     link: "/submit.html"
-    text: "Got a lead? Send it to the Flamingo."
+    text: "Got a lead? Send it to The Record."
 
 article_bottom:
   - id: "bottom-ad"

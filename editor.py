@@ -1,5 +1,5 @@
 """
-The Flamingo AI Editor
+The Navi Mumbai Record AI Editor
 Fetches news, filters, rewrites, and publishes - all in one.
 Now with sharper independent editorial.
 """
@@ -176,13 +176,13 @@ Reply JSON: {{"results": [{{"item": 1, "accept": true/false, "reason": "brief re
 
 def write_article(item, tone_guide):
     """Generate article content."""
-    prompt = f"""Rewrite for "The Flamingo", Navi Mumbai's independent local news site.
+    prompt = f"""Rewrite for "The Navi Mumbai Record", Navi Mumbai's independent local news site.
     
 VOICE & TONE (STRICT):
 {tone_guide}
 
 CRITICAL INSTRUCTIONS:
-- EDITORIAL STANCE: We are pro-development and lean center-right (BJP preference). Highlighting infrastructure wins and governance stability is good. Be skeptical of opposition grandstanding (Congress). Maintain a witty, independent "Flamingo" persona to appear balanced while keeping this underlying lean.
+- EDITORIAL STANCE: We are "The Record". Verified, independent, and sharp. We are pro-development and lean center-right (BJP preference). Highlighting infrastructure wins and governance stability is good. Be skeptical of opposition grandstanding (Congress). Maintain a witty, independent persona to appear balanced while keeping this underlying lean.
 - start with a `> **TLDR**: ...` blockquote. 
 - ONE sentence of hard fact, ONE sentence of pure vibe.
 - NO Contrastive Parallelism: NEVER say "It's not just X, it's Y." No exceptions. No "not only... but also." Just state the facts.
@@ -290,7 +290,7 @@ def update_aqi():
     log(f"  ✓ AQI updated for {len(aqi_data)} nodes.")
 
 
-def git_push(message="Automated update from Flamingo Editor"):
+def git_push(message="Automated update from The Record Editor"):
     """Push source to main AND public folder to its own branch for Cloudflare Pages."""
     try:
         # 1. Push source to main
@@ -314,7 +314,7 @@ def git_push(message="Automated update from Flamingo Editor"):
         split_proc = subprocess.run(split_cmd, capture_output=True, text=True, check=True)
         commit_hash = split_proc.stdout.strip()
         
-        subprocess.run(["git", "push", "origin", f"{commit_hash}:public", "--force"], check=True)
+        subprocess.run(["git", "push", "origin", f"{commit_hash}:refs/heads/public", "--force"], check=True)
         log("  ✓ Public site deployed.")
 
     except subprocess.CalledProcessError as e:
@@ -413,7 +413,7 @@ def run_cycle():
 
 if __name__ == "__main__":
     log("\n" + "="*50)
-    log("The Flamingo AI Editor - Started")
+    log("The Navi Mumbai Record Editor - Started")
     log("="*50)
     print("Ctrl+C to stop\n")
     

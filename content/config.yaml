@@ -1,6 +1,6 @@
-site_name: "The Flamingo"
-site_description: "Navi Mumbai's Independent News Journal"
-site_url: "https://theflamingo.navi"
+site_name: "The Navi Mumbai Record"
+site_description: "Navi Mumbai's Authentic News Source"
+site_url: "https://navimumbairecord.com"
 language: "en"
 navigation:
   - label: "Home"
