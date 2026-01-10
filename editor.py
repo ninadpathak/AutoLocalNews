@@ -182,17 +182,18 @@ VOICE & TONE (STRICT):
 {tone_guide}
 
 CRITICAL INSTRUCTIONS:
-- EDITORIAL STANCE: We are "The Record". Smart, fast, uncompromising. We are pro-development and lean center-right (BJP preference). Highlighting infrastructure wins is good. Be skeptical of opposition grandstanding.
-- TONE: Polished, punchy, and personality-driven. Like a smart observer who hates fluff.
-- STRICT BANNED WORDS: Crucial, Critical, Landscape, Pivotal, Unprecedented, Spearheaded, Delve, Facet, Realm, Synergize, Robust, Tapestry. (Instant fail if used).
-- MAX 3 SENTENCES per paragraph. Visual airiness is non-negotiable.
-- Vary sentence length. Mix short, staccato sentences with longer, rhythmic ones.
+- EDITORIAL STANCE: We are "The Record". Smart, simple, and real.
+- TONE: Casual, smart, and FULL OF PERSONALITY. Write like a real person, not a journalist.
+- LANGUAGE: SIMPLE WORDS ONLY. No big words. No "news speak".
+- STRICT BANNED WORDS: Crucial, Critical, Landscape, Pivotal, Unprecedented, Spearheaded, Delve, Facet, Realm, Synergize, Robust, Tapestry, Commence, Utilize.
+- MAX 3 SENTENCES per paragraph. Keep it fast.
 - NO "Journalese": Avoid "reportedly", "sources say", "garnered attention".
 - NO Rhetorical Questions.
+- MANDATORY: Start with a `> **TLDR**: ...` blockquote. One sentence of hard news, one sentence of personality.
 - STRICT STRUCTURE:
-    - Headline: Fact-based, compelling.
-    - Lede: Start with the most specific, interesting detail (name/number/location).
-- High density: Use specific Sector numbers, ₹ amounts, and node names.
+    - Headline: Punchy, under 10 words.
+    - Lede: Jump straight into the story with personality.
+    - High density: Use specific Sector numbers, ₹ amounts, and node names.
 
 SOURCE:
 Title: {item.get('title')}
@@ -241,17 +242,39 @@ def save_article(article, item):
     image_path = os.path.join(PUBLIC_DIR, 'images', 'news', f"{slug}.png")
     os.makedirs(os.path.dirname(image_path), exist_ok=True)
     
-    # Check if image exists, if not create a colored placeholder
-    if not os.path.exists(image_path):
+    # Create image using Google Imagen
+    image_path = os.path.join(PUBLIC_DIR, 'images', 'news', f"{slug}.png")
+    os.makedirs(os.path.dirname(image_path), exist_ok=True)
+    
+    if not os.path.exists(image_path) and article.get('image_prompt'):
         try:
-            from data.image_gen import generate_placeholder_image
-            # Use the first tag or a default
-            tag_text = article['tags'][0] if article.get('tags') else "NEWS"
-            generate_placeholder_image(image_path, article['title'], tag_text)
-            log(f"  ✓ Generated image for {slug}")
+            log(f"  Generating Imagen image for {slug}...")
+            # Use the same client but call imagine
+            # Note: ensure your API key has access to Imagen
+            imagen_response = client.models.generate_images(
+                model='imagen-4.0-fast-generate-001',
+                prompt=article['image_prompt'] + ", photorealistic, 8k, journalistic style, navi mumbai atmosphere",
+                config=genai.types.GenerateImagesConfig(
+                    number_of_images=1,
+                    aspect_ratio="16:9"
+                )
+            )
+            if imagen_response.generated_images:
+                image = imagen_response.generated_images[0]
+                image.save(image_path)
+                log(f"  ✓ Imagen generated: {slug}")
+            else:
+                 log("  Imagen returned no images.")
         except Exception as e:
-            log(f"  Image gen failed: {e}")
-            pass
+            log(f"  Imagen failed: {e}")
+            # Fallback to placeholder
+            try:
+                from data.image_gen import generate_placeholder_image
+                tag_text = article['tags'][0] if article.get('tags') else "NEWS"
+                generate_placeholder_image(image_path, article['title'], tag_text)
+                log(f"  ✓ Fallback placeholder: {slug}")
+            except:
+                pass
 
     content = f"""---
 title: "{article['title'].replace('"', '\\"')}"

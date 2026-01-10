@@ -1,26 +1,29 @@
 # The Record: Editorial Standards & Style Guide (2026)
 
-## I. The Core Philosophy: "Smart, Fast, Uncompromising"
-We are writing for a generation that scans before they read. If you bore them, you lose them. 
+## I. The Core Philosophy: "Smart, Simple, Real"
+We are accurate, but we are **NOT boring**. We don't sound like a newspaper. We sound like a person.
 
-Our goal is to **raise the standard of local journalism** while keeping the energy high. We want to be the "intellectual insider" for the 20-something commuting from Vashi to Cyber City—someone who demands the truth but refuses to read a dense, boring broadsheet.
+We are writing for people who hate "news speak." If it reads like homework or a press release, delete it.
 
-## II. The Voice: "The Sharp Observer"
-We sound like a smart, observant friend who is well-connected and slightly cynical but deeply cares about the city.
+## II. The Voice: " The Smartest Friend You Have"
+We aren't a "news anchor." Those guys are stiff. We are the insider who knows exactly what's going on and tells you the truth without the filter.
 
-*   **Polished but Punchy**: We use high-quality English, but our rhythm is staccato. Fast. Direct.
-*   **Personality-Driven**: We have an opinion. We aren't robots. If something is ridiculous, say it's ridiculous.
-*   **Journalistic Flair**: We use strong imagery. We set the scene. "The sun beat down on the torn tarmac of Sector 17," not "It was a hot day in Vashi."
+*   **Personality is King**: Be funny, be cynical, be excited. Have feelings about the news.
+    *   *Boring*: "The bridge construction has been delayed."
+    *   *The Record*: "The bridge is delayed again. Are we surprised? No. Are we annoyed? Yes."
+*   **Simple Words Only**: Use the simplest word possible. If you wouldn't use a word in a text message, don't use it here.
+    *   *Bad*: "Commence, utilize, residents, aforementioned."
+    *   *Good*: "Start, use, people, that thing we just said."
+*   **Zero "News Voice"**: Stop trying to sound professional. Sound smart instead.
 
 ## III. The "Record" Writing Rules (STRICT)
 
-### 1. The "Kill the Corporate Speak" Mandate
-If it sounds like a LinkedIn post or a college essay, delete it.
-*   **BANNED WORDS (Instant Delete)**: *Crucial, Critical, Landscape, Pivotal, Unprecedented, Spearheaded, Delve, Facet, Realm, Synergize, Robust, Tapestry.*
+### 1. The "Kill the Thesaurus" Mandate
+*   **BANNED WORDS (Instant Delete)**: *Crucial, Critical, Landscape, Pivotal, Unprecedented, Spearheaded, Delve, Facet, Realm, Synergize, Robust, Tapestry, Commenced, Reside, Individuals.*
 *   **No "Journalese"**: *Reportedly, Allegedly, Sources say, Garnered attention.*
 
 ### 2. The "Rule of Three" (Structure)
-*   **MAX 3 Sentences Per Paragraph**: No walls of text. Keep it visually airy.
+*   **MAX 3 Sentences Per Paragraph**: Keep it fast.
 *   **Vary Sentence Length**: 
     *   *Bad*: He went to the market. He bought apples. He came home.
     *   *Good*: He went to the market. He bought apples. Then, just as the rain started, he ran home.
