@@ -86,6 +86,9 @@ def fetch_feeds(seen):
     
     new_items = []
     
+    # Date-based filtering constants
+    MAX_DAYS_OLD = 2
+    
     for source in sources.get('feeds', []):
         url = source['url']
         try:
@@ -93,6 +96,21 @@ def fetch_feeds(seen):
             log(f"  [{len(feed.entries)} items] {url[:50]}...")
             
             for entry in feed.entries:
+                # 1. Date Check (Critical)
+                if hasattr(entry, 'published_parsed'):
+                     published_tm = entry.published_parsed
+                elif hasattr(entry, 'updated_parsed'):
+                     published_tm = entry.updated_parsed
+                else:
+                     published_tm = None
+                
+                if published_tm:
+                    published_dt = datetime.fromtimestamp(time.mktime(published_tm))
+                    days_diff = (datetime.now() - published_dt).days
+                    if days_diff > MAX_DAYS_OLD:
+                        # log(f"    Skipping old item: {entry.get('title')} ({days_diff} days old)")
+                        continue
+                
                 # Basic link from feed
                 feed_link = entry.get('link', '')
                 if not feed_link:
@@ -138,7 +156,13 @@ def check_newsworthy(items):
         for i, item in enumerate(items)
     ])
     
-    prompt = f"""You are a STRICT news editor for a Navi Mumbai local news site. Only accept REAL NEWS.
+    today_date = datetime.now().strftime('%Y-%m-%d')
+    prompt = f"""You are a STRICT news editor for a Navi Mumbai local news site. 
+    CURRENT DATE: {today_date}
+    
+    Only accept REAL, RECENT NEWS. Old news recycled as new should be rejected.
+    
+    You are a STRICT news editor for a Navi Mumbai local news site. Only accept REAL NEWS.
 
 STRICT ACCEPT CRITERIA (must meet ALL):
 - Must be an actual NEWS EVENT (something happened, was announced, or was discovered)
