@@ -7,5 +7,3 @@ feeds:
     category: "local"
   - url: "https://indianexpress.com/section/cities/navi-mumbai/feed"
     category: "local"
-  - url: "https://www.navimumbai.com/feed"
-    category: "local"

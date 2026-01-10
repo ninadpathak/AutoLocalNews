@@ -182,13 +182,16 @@ VOICE & TONE (STRICT):
 {tone_guide}
 
 CRITICAL INSTRUCTIONS:
-- EDITORIAL STANCE: We are "The Record". Verified, independent, and sharp. We are pro-development and lean center-right (BJP preference). Highlighting infrastructure wins and governance stability is good. Be skeptical of opposition grandstanding (Congress). Maintain a witty, independent persona to appear balanced while keeping this underlying lean.
-- start with a `> **TLDR**: ...` blockquote. 
-- ONE sentence of hard fact, ONE sentence of pure vibe.
-- NO Contrastive Parallelism: NEVER say "It's not just X, it's Y." No exceptions. No "not only... but also." Just state the facts.
-- NO Colon-Separated Sentences: Don't use a colon or semicolon to join two independent clauses. Use a period. 
-- NO "Journalese" like "officials stated" or "reported." Be the witty friend.
-- NO fluff prefixes like "In a world" or "Interesting development."
+- EDITORIAL STANCE: We are "The Record". We are a high-standard investigative journal. We are pro-development and lean center-right (BJP preference). Highlighting infrastructure wins and governance stability is good. Be skeptical of opposition grandstanding (Congress).
+- TONE: Authoritative, dry wit (irony/understatement), and OBSESSIVELY specific.
+- NO "Witty Friend" or "Sass": Do not use slang, "OMG" energy, or childish jokes.
+- NO "Journalese": Avoid "reportedly", "sources say", "garnered attention".
+- NO Rhetorical Questions: Never ask the reader what they think.
+- STRICT STRUCTURE:
+    - Headline: Fact-based, compelling.
+    - Lede: Start with the most specific, interesting detail (name/number/location).
+    - Body: Alternate between hard data (cost, dates) and analysis.
+- Narrative: Connect this specific event to the larger story of Navi Mumbai's growth or struggles.
 - High density: Use specific Sector numbers, ₹ amounts, and node names.
 
 SOURCE:
@@ -197,16 +200,28 @@ Content: {item.get('summary')}
 
 Write: headline (~10 words), body (200-350 words total), slug (max 4 words), tags, and an Image Generation Prompt (style: minimalist photojournalism, Navi Mumbai vibe).
 
-Reply JSON: {{"title": "...", "content": "...", "slug": "...", "tags": ["..."], "image_prompt": "..."}}"""
+Reply JSON: {{"title": "...", "content": "...", "slug": "...", "tags": ["..."], "image_prompt": "..."}}
+Ensure the response is VALID JSON. Escape all double quotes inside strings."""
     
     try:
         response = client.models.generate_content(
             model=MODEL, contents=prompt,
             config={'response_mime_type': 'application/json'}
         )
-        return json.loads(response.text)
+        text = response.text.strip()
+        # Cleanup potential markdown formatting if the model adds it despite mime_type
+        if text.startswith("```json"):
+            text = text[7:]
+        if text.startswith("```"):
+            text = text[3:]
+        if text.endswith("```"):
+            text = text[:-3]
+        return json.loads(text.strip())
     except Exception as e:
         log(f"  Write error: {e}")
+        # Log a snippet of the failed text for debugging
+        if 'response' in locals() and hasattr(response, 'text'):
+            log(f"  Failed text snippet: {response.text[:100]}...")
         return None
 
 
@@ -220,13 +235,31 @@ def save_article(article, item):
     if len(slug.split('-')) > 6:
         slug = '-'.join(slug.split('-')[:5])
     
+    # Create a simple placeholder image for now to prevent 404s
+    # In a real scenario, this would call Imagen/DALL-E
+    PUBLIC_DIR = os.path.join(BASE_DIR, 'public')
+    image_path = os.path.join(PUBLIC_DIR, 'images', 'news', f"{slug}.png")
+    os.makedirs(os.path.dirname(image_path), exist_ok=True)
+    
+    # Check if image exists, if not create a colored placeholder
+    if not os.path.exists(image_path):
+        try:
+            from data.image_gen import generate_placeholder_image
+            # Use the first tag or a default
+            tag_text = article['tags'][0] if article.get('tags') else "NEWS"
+            generate_placeholder_image(image_path, article['title'], tag_text)
+            log(f"  ✓ Generated image for {slug}")
+        except Exception as e:
+            log(f"  Image gen failed: {e}")
+            pass
+
     content = f"""---
 title: "{article['title'].replace('"', '\\"')}"
 date: {today}
 author: {random.choice(AUTHORS)}
 tags: {article['tags']}
 original_source: "{item['link']}"
-featured_image: "{article.get('featured_image', '')}"
+featured_image: "/images/news/{slug}.png"
 image_prompt: "{article.get('image_prompt', '').replace('"', '\\"')}"
 ---
 {article['content']}

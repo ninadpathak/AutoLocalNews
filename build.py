@@ -90,6 +90,14 @@ def build_site():
     # Sort posts by date descending
     posts.sort(key=lambda x: str(x.get('date', '')), reverse=True)
     
+    # Generate dynamic ticker from latest news
+    try:
+        from data.ticker_gen import update_ticker
+        config['ticker_headlines'] = update_ticker(posts)
+    except Exception as e:
+        print(f"Ticker generation failed: {e}")
+        config['ticker_headlines'] = ["THE RECORD: ALWAYS WATCHING"]
+    
     os.makedirs(PUBLIC_DIR, exist_ok=True)
     
     # Render index

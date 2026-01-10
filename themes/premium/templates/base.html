@@ -19,11 +19,15 @@
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker-item">NAVI MUMBAI METRO LINE 1 NOW OPERATIONAL</div>
-            <div class="ticker-item">VASHI APMC MARKET STABLE</div>
-            <div class="ticker-item">THANE CREEK FLAMINGO COUNT HIGHEST SINCE 2021</div>
-            <div class="ticker-item">BELAPUR SMART CITY PROJECT TO SPEED UP</div>
-            <div class="ticker-item">KHARGHAR SECTOR 35 WATER SUPPLY RESTORED</div>
+            {% if site.ticker_headlines %}
+            {% for headline in site.ticker_headlines %}
+            <div class="ticker-item">{{ headline }}</div>
+            {% endfor %}
+            {% else %}
+            <div class="ticker-item">THE NAVI MUMBAI RECORD: LIVE UPDATES</div>
+            <div class="ticker-item">VASHI TRAFFIC NORMAL</div>
+            <div class="ticker-item">NO MAJOR DELAYS REPORTED</div>
+            {% endif %}
         </div>
     </div>
 
