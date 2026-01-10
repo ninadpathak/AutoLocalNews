@@ -1,16 +1,19 @@
 ---
-title: "Student's Scholarship Vanishes in ₹2 Lakh Scam"
+title: "Student fleeced ₹2 Lakh in Scholarship Scam"
 date: 2026-01-11
 author: gurpreet_bajwa
-tags: ['cyber fraud', 'Nerul', 'scholarship', 'SIES College', 'crime']
+tags: ['cyber fraud', 'Kharghar', 'scam', 'NMP', 'scholarship']
 original_source: "https://indianexpress.com/article/cities/navi-mumbai/navi-mumbai-student-loses-rs-2-lakh-including-scholarship-money-to-cyber-fraud-7587737/"
 featured_image: "/images/news/scholarship-scam.png"
-image_prompt: "minimalist photojournalism, a student looking stressed in front of SIES college, Navi Mumbai vibe."
+image_prompt: "A distraught student in Kharghar, looking at a phone with a fraud message, minimalist photojournalism, Navi Mumbai vibe."
 ---
-> **TLDR**: A student lost ₹2 lakh, including scholarship money, to cyber fraud. Seriously, can't anyone keep our money safe?
+> **TLDR**: A student lost ₹2 lakh, including scholarship money, to cyber fraud. Seriously, people, stop clicking random links! 
 
-The dream of higher education just got a lot more expensive for one Nerul student. A cyber fraud wiped out ₹2 lakh from their account, including a hefty chunk of scholarship funds earmarked for tuition at SIES College.
+Imagine your scholarship money vanishing into thin air. That's exactly what happened to one unlucky student in Kharghar last week. They got scammed out of ₹2 lakh.
 
-The scam played out with classic simplicity. Posing as a bank representative, the fraudster called the student and sweet-talked them into sharing sensitive banking details. The entire sum vanished within minutes. Nerul police station has registered a case, but recovering digital ghosts is always a long shot.
+The student, whose name is being withheld because, you know, victim-blaming is a thing, clicked on a link promising some kind of scholarship update. Instead, the link stole their banking details. ₹2 Lakh. Gone.
 
-This isn't just about the money. It's about the system failing students who are trying to build a future. The real question: Who's holding banks accountable for letting this happen again and again?
+Navi Mumbai Police's cybercrime unit is "investigating" (read: filling out paperwork). Meanwhile, the student is probably eating Maggi for the next six months. The cops are urging everyone to not click on suspicious links. 
+
+Pro-tip: If it sounds too good to be true, it probably is. Also, maybe forward those dodgy links to that annoying uncle who shares conspiracy theories. Just kidding (mostly).
+

@@ -236,14 +236,9 @@ def save_article(article, item):
     if len(slug.split('-')) > 6:
         slug = '-'.join(slug.split('-')[:5])
     
-    # Create a simple placeholder image for now to prevent 404s
-    # In a real scenario, this would call Imagen/DALL-E
-    PUBLIC_DIR = os.path.join(BASE_DIR, 'public')
-    image_path = os.path.join(PUBLIC_DIR, 'images', 'news', f"{slug}.png")
-    os.makedirs(os.path.dirname(image_path), exist_ok=True)
-    
-    # Create image using Google Imagen
-    image_path = os.path.join(PUBLIC_DIR, 'images', 'news', f"{slug}.png")
+    # Save to persistent theme directory so it survives build wipes
+    THEME_IMG_DIR = os.path.join(BASE_DIR, 'themes', 'premium', 'static', 'images', 'news')
+    image_path = os.path.join(THEME_IMG_DIR, f"{slug}.png")
     os.makedirs(os.path.dirname(image_path), exist_ok=True)
     
     if not os.path.exists(image_path) and article.get('image_prompt'):

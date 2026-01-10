@@ -183,14 +183,14 @@ def build_site():
     if os.path.exists(src_css):
         shutil.copy(src_css, os.path.join(PUBLIC_DIR, 'css', 'style.css'))
     
-    # Copy Images
+    # Copy Theme Images (Base)
     src_imgs = os.path.join(THEME_DIR, 'static', 'images')
     dst_imgs = os.path.join(PUBLIC_DIR, 'images')
     if os.path.exists(src_imgs):
         if os.path.exists(dst_imgs):
             shutil.rmtree(dst_imgs)
         shutil.copytree(src_imgs, dst_imgs)
-    
+
     print(f"Built {len(posts)} articles.")
 
 
