@@ -59,5 +59,45 @@
       "Flyover"
     ],
     "added": "2026-01-11 10:30:02"
+  },
+  "flamingo-gone-missing": {
+    "prompt": "minimalist photojournalism, lone flamingo feather on polluted mudflat, Navi Mumbai vibe",
+    "title": "Where did all the flamingos go?",
+    "tags": [
+      "flamingos",
+      "wetlands",
+      "environment",
+      "navi mumbai",
+      "pollution"
+    ],
+    "added": "2026-01-11 10:35:36"
+  },
+  "sena-bjp-fight": {
+    "prompt": "minimalist photojournalism, Shiv Sena protest in front of NMMC headquarters, Navi Mumbai vibe",
+    "title": "Sena Slams BJP Leader Over NMMC Projects",
+    "tags": [
+      "Shiv Sena",
+      "BJP",
+      "NMMC",
+      "Corruption",
+      "Navi Mumbai"
+    ],
+    "added": "2026-01-11 10:35:44"
+  },
+  "nerul-rental-bust": {
+    "prompt": "minimalist photojournalism, exterior shot of an apartment building in Nerul, Navi Mumbai, showing the entrance gate with security, overcast sky, subtle tension",
+    "title": "Landlords Busted: Renting to Foreigners\u2026Illegally?!",
+    "tags": [
+      "Nerul",
+      "Illegal rentals",
+      "Nigerians",
+      "NMMC",
+      "Khargar police",
+      "Sector 21",
+      "NRI complex",
+      "Landlords",
+      "Foreigners"
+    ],
+    "added": "2026-01-11 10:35:53"
   }
 }
