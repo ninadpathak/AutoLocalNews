@@ -31,6 +31,7 @@ client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 # MODEL = 'gemini-3-flash-preview'
 MODEL = 'gemini-2.0-flash'
 AUTHORS = ["ninad_pathak", "gurpreet_bajwa"]
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
 
 os.makedirs(POSTS_DIR, exist_ok=True)
 os.makedirs(os.path.dirname(SEEN_FILE), exist_ok=True)
@@ -79,7 +80,7 @@ def fetch_content(url):
     return None, url
 
 
-def fetch_feeds(seen):
+def fetch_feeds(seen, limit=10):
     """Fetch all RSS feeds, return new items (don't mark as seen yet)."""
     with open(SOURCES_FILE) as f:
         sources = yaml.safe_load(f)
@@ -90,12 +91,18 @@ def fetch_feeds(seen):
     MAX_DAYS_OLD = 2
     
     for source in sources.get('feeds', []):
+        if len(new_items) >= limit:
+            break
+
         url = source['url']
         try:
-            feed = feedparser.parse(url)
+            feed = feedparser.parse(url, agent=USER_AGENT)
             log(f"  [{len(feed.entries)} items] {url[:50]}...")
             
             for entry in feed.entries:
+                if len(new_items) >= limit:
+                    break
+
                 # 1. Date Check (Critical)
                 if hasattr(entry, 'published_parsed'):
                      published_tm = entry.published_parsed
@@ -414,7 +421,8 @@ def run_cycle():
     seen = load_seen()
     
     # 1. Fetch new items
-    items = fetch_feeds(seen)
+    # Limit to 5 items per cycle to prevent timeouts and crashes
+    items = fetch_feeds(seen, limit=5)
     if not items:
         log("  No new items.")
         return
@@ -448,6 +456,13 @@ def run_cycle():
         return
     
     log(f"  {len(newsworthy)} items accepted for publishing.")
+
+    # Mark rejected items as seen immediately so we don't re-process them if we crash
+    processed_indices = set(i for i, _ in newsworthy)
+    for i, item in enumerate(items):
+        if i not in processed_indices:
+            seen.add(item['hash'])
+    save_seen(seen)
     
     # 3. Write and publish
     tone_guide = load_tone_guide()
@@ -455,6 +470,12 @@ def run_cycle():
     
     for _, item in newsworthy:
         log(f"  Writing: {item.get('title', '')[:40]}...")
+        
+        # Double check to avoid reprocessing if we restarted
+        if item['hash'] in seen:
+            log(f"  Skipping already seen: {item.get('title', '')[:20]}")
+            continue
+
         article = write_article(item, tone_guide)
         
         if article:
@@ -462,15 +483,14 @@ def run_cycle():
             log(f"  ✓ Published: {slug}")
             published_titles.append(article.get('title', slug))
         
-        # Mark as seen after processing
+        # Mark as seen after processing (success or fail) to avoid sticking
         seen.add(item['hash'])
+        save_seen(seen)
+        
+        # Rate limit kindness
+        time.sleep(5)
     
     published_count = len(published_titles)
-    
-    # Mark rejected items as seen too
-    for i, item in enumerate(items):
-        seen.add(item['hash'])
-    save_seen(seen)
     
     # 4. Update AQI
     update_aqi()
