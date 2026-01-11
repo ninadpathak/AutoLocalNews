@@ -100,10 +100,42 @@ def build_site():
     
     os.makedirs(PUBLIC_DIR, exist_ok=True)
     
-    # Render index
-    output = env.get_template('index.html').render(site=config, latest_news=posts[:10], title=config['site_name'])
-    with open(os.path.join(PUBLIC_DIR, 'index.html'), 'w') as f:
-        f.write(output)
+    # Render paginated index
+    POSTS_PER_PAGE = 10
+    total_posts = len(posts)
+    # Calculate number of pages, ensuring at least 1 page
+    num_pages = (total_posts + POSTS_PER_PAGE - 1) // POSTS_PER_PAGE
+    if num_pages == 0:
+        num_pages = 1
+
+    for page_num in range(1, num_pages + 1):
+        start_idx = (page_num - 1) * POSTS_PER_PAGE
+        end_idx = start_idx + POSTS_PER_PAGE
+        page_posts = posts[start_idx:end_idx]
+        
+        # Determine filenames and links
+        if page_num == 1:
+            filename = 'index.html'
+            prev_page = None
+        else:
+            filename = f'page{page_num}.html'
+            prev_page = '/index.html' if page_num == 2 else f'/page{page_num-1}.html'
+            
+        if page_num < num_pages:
+            next_page = f'/page{page_num+1}.html'
+        else:
+            next_page = None
+            
+        output = env.get_template('index.html').render(
+            site=config, 
+            latest_news=page_posts, 
+            title=config['site_name'],
+            prev_page=prev_page,
+            next_page=next_page
+        )
+        
+        with open(os.path.join(PUBLIC_DIR, filename), 'w') as f:
+            f.write(output)
     
     # Render archive
     output = env.get_template('archive.html').render(site=config, posts=posts, title="Archives")

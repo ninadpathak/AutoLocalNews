@@ -99,5 +99,65 @@
       "Foreigners"
     ],
     "added": "2026-01-11 10:35:53"
+  },
+  "election-noise-pollution": {
+    "prompt": "minimalist photojournalism, a resident in Vashi covering their ears in frustration as a political campaign van with loudspeakers drives by, showing residential buildings in the background, Navi Mumbai vibe.",
+    "title": "Election Noise: Navi Mumbai's Unwanted Soundtrack",
+    "tags": [
+      "Navi Mumbai",
+      "Elections",
+      "Noise Pollution",
+      "NMMC",
+      "Politics"
+    ],
+    "added": "2026-01-11 10:41:32"
+  },
+  "wipro-office-lease": {
+    "prompt": "minimalist photojournalism, exterior shot of a modern glass office building in Navi Mumbai, Wipro logo subtly visible, overcast sky",
+    "title": "Wipro Doubles Down: Massive New Office in Navi Mumbai",
+    "tags": [
+      "Wipro",
+      "Navi Mumbai",
+      "Office Space",
+      "Real Estate",
+      "IT Sector"
+    ],
+    "added": "2026-01-11 10:41:40"
+  },
+  "kanpur-flight-arrives": {
+    "prompt": "minimalist photojournalism, exterior of Navi Mumbai airport at sunset, an IndiGo plane landing, Navi Mumbai vibe",
+    "title": "Kanpur to Navi Mumbai: Flights Incoming!",
+    "tags": [
+      "Navi Mumbai Airport",
+      "IndiGo",
+      "Kanpur",
+      "Flights",
+      "Connectivity"
+    ],
+    "added": "2026-01-11 10:43:21"
+  },
+  "nmia-wifi-promise": {
+    "prompt": "minimalist photojournalism, wide shot of NMIA construction site with a focus on a cell tower in the background, Navi Mumbai vibe",
+    "title": "NMIA: No more dropped calls at the new airport?",
+    "tags": [
+      "NMIA",
+      "Navi Mumbai International Airport",
+      "wifi",
+      "connectivity",
+      "Adani"
+    ],
+    "added": "2026-01-11 10:43:29"
+  },
+  "mangrove-cleanup-drive": {
+    "prompt": "minimalist photojournalism, Navi Mumbai vibe, mangrove cleanup, volunteers collecting trash, Thane Creek in background",
+    "title": "Mangrove Mess: Vanashakti and Yatri Take on the Tide",
+    "tags": [
+      "mangroves",
+      "Navi Mumbai",
+      "Vanashakti",
+      "Yatri",
+      "cleanup"
+    ],
+    "added": "2026-01-11 10:43:38"
   }
 }

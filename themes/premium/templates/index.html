@@ -31,6 +31,19 @@
         </article>
         {% endfor %}
     </div>
+
+    <!-- Pagination -->
+    <div class="pagination" style="display: flex; justify-content: space-between; margin-top: 2rem; padding: 1rem 0; border-top: 1px solid var(--color-border);">
+        {% if prev_page %}
+        <a href="{{ prev_page }}" class="btn-read" style="text-decoration: none;">&larr; Newer</a>
+        {% else %}
+        <span></span>
+        {% endif %}
+
+        {% if next_page %}
+        <a href="{{ next_page }}" class="btn-read" style="text-decoration: none;">Older &rarr;</a>
+        {% endif %}
+    </div>
     {% else %}
     <div style="text-align: center; padding: var(--space-xl);">
         <h2>Quiet on the harbour front.</h2>
