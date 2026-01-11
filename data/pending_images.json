@@ -1,0 +1,51 @@
+{
+  "bjp-tax-freeze": {
+    "prompt": "minimalist photojournalism, Navi Mumbai vibe, campaign poster promising no tax increases, slightly weathered and ironic",
+    "title": "BJP: No tax hikes in Navi Mumbai for 20 years?",
+    "tags": [
+      "BJP",
+      "NMMC",
+      "Property Tax",
+      "Water Tax",
+      "Elections",
+      "Navi Mumbai"
+    ],
+    "added": "2026-01-11 10:24:08"
+  },
+  "wpl-navi-mumbai": {
+    "prompt": "minimalist photojournalism, wide shot of a packed cricket stadium during a Women's Premier League match in Navi Mumbai, fans cheering, iconic Navi Mumbai landmarks visible in the background",
+    "title": "Women's Premier League Roars into Navi Mumbai!",
+    "tags": [
+      "WPL",
+      "Navi Mumbai",
+      "Cricket",
+      "Sports"
+    ],
+    "added": "2026-01-11 10:24:16"
+  },
+  "wpl-2026-mumbai": {
+    "prompt": "Minimalist photojournalism, exterior of DY Patil Stadium, Navi Mumbai, WPL banner, traffic in the foreground.",
+    "title": "WPL 2026: Navi Mumbai's Stadium Gears Up",
+    "tags": [
+      "WPL",
+      "DY Patil Stadium",
+      "Cricket",
+      "Navi Mumbai",
+      "Nerul",
+      "Traffic"
+    ],
+    "added": "2026-01-11 10:24:24"
+  },
+  "cop-dance-cash": {
+    "prompt": "minimalist photojournalism, grainy security camera footage still, blurred faces, cash raining down, bar interior, Navi Mumbai vibe",
+    "title": "Cop Suspended: Bar Dance, Cash Rain in Navi Mumbai",
+    "tags": [
+      "Navi Mumbai Police",
+      "Suspension",
+      "Corruption",
+      "Bar Dance",
+      "Turbhe MIDC"
+    ],
+    "added": "2026-01-11 10:24:32"
+  }
+}

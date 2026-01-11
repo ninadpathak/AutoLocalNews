@@ -26,6 +26,7 @@ TONE_GUIDE_PATH = os.path.join(BASE_DIR, 'content', 'voice_tone_guide.md')
 SEEN_FILE = os.path.join(BASE_DIR, 'data', 'seen.json')
 LOG_FILE = os.path.join(BASE_DIR, 'editor.log')
 AQI_FILE = os.path.join(BASE_DIR, 'data', 'aqi.json')
+PENDING_IMAGES_FILE = os.path.join(BASE_DIR, 'data', 'pending_images.json')
 
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 # MODEL = 'gemini-3-flash-preview'
@@ -58,6 +59,100 @@ def save_seen(seen):
     """Save seen hashes."""
     with open(SEEN_FILE, 'w') as f:
         json.dump(list(seen), f)
+
+
+def load_pending_images():
+    """Load pending image generation tasks."""
+    if os.path.exists(PENDING_IMAGES_FILE):
+        try:
+            with open(PENDING_IMAGES_FILE) as f:
+                return json.load(f)
+        except Exception:
+            return {}
+    return {}
+
+
+def save_pending_images(pending):
+    """Save pending image generation tasks."""
+    os.makedirs(os.path.dirname(PENDING_IMAGES_FILE), exist_ok=True)
+    with open(PENDING_IMAGES_FILE, 'w') as f:
+        json.dump(pending, f, indent=2)
+
+
+def generate_image_from_prompt(slug, prompt):
+    """Helper to generate and save image. Returns True if successful."""
+    THEME_IMG_DIR = os.path.join(BASE_DIR, 'themes', 'premium', 'static', 'images', 'news')
+    image_path = os.path.join(THEME_IMG_DIR, f"{slug}.png")
+    os.makedirs(os.path.dirname(image_path), exist_ok=True)
+    
+    try:
+        log(f"  Generating Imagen image for {slug}...")
+        imagen_response = client.models.generate_images(
+            model='imagen-4.0-fast-generate-001',
+            prompt=prompt + ", photorealistic, 8k, journalistic style, navi mumbai atmosphere",
+            config=genai.types.GenerateImagesConfig(
+                number_of_images=1,
+                aspect_ratio="16:9"
+            )
+        )
+        if imagen_response.generated_images:
+            generated_obj = imagen_response.generated_images[0]
+            if hasattr(generated_obj, 'image') and hasattr(generated_obj.image, 'save'):
+                 generated_obj.image.save(image_path)
+                 log(f"  ✓ Imagen generated: {slug}")
+                 return True
+            elif hasattr(generated_obj, 'image_bytes'):
+                 with open(image_path, 'wb') as f:
+                     f.write(generated_obj.image_bytes)
+                 log(f"  ✓ Imagen generated (bytes): {slug}")
+                 return True
+            else:
+                 log(f"  Imagen object unknown format: {dir(generated_obj)}")
+        else:
+             log("  Imagen returned no images.")
+    except Exception as e:
+        log(f"  Imagen failed for {slug}: {e}")
+    return False
+
+
+def process_pending_images():
+    """Retry generation for pending images."""
+    pending = load_pending_images()
+    if not pending:
+        return
+
+    log(f"Processing {len(pending)} pending images...")
+    
+    # Track resolved slugs to remove them
+    resolved = []
+    
+    for slug, data in pending.items():
+        # Check if file exists now (maybe created by parallel process or manual fix)
+        THEME_IMG_DIR = os.path.join(BASE_DIR, 'themes', 'premium', 'static', 'images', 'news')
+        image_path = os.path.join(THEME_IMG_DIR, f"{slug}.png")
+        
+        if os.path.exists(image_path):
+            # Verify file size is not zero
+            if os.path.getsize(image_path) > 0:
+                resolved.append(slug)
+                continue
+            
+        success = generate_image_from_prompt(slug, data['prompt'])
+        if success:
+            resolved.append(slug)
+        else:
+            # If we have title and tags, we could try placeholder again as backup
+            # but primary goal is to get the real image.
+            pass
+            
+        # Rate limit kindness
+        time.sleep(2)
+            
+    if resolved:
+        for slug in resolved:
+            del pending[slug]
+        save_pending_images(pending)
+        log(f"  ✓ Resolved {len(resolved)} pending images.")
 
 
 def load_tone_guide():
@@ -272,36 +367,22 @@ def save_article(article, item):
     image_path = os.path.join(THEME_IMG_DIR, f"{slug}.png")
     os.makedirs(os.path.dirname(image_path), exist_ok=True)
     
+    image_success = False
     if not os.path.exists(image_path) and article.get('image_prompt'):
-        try:
-            log(f"  Generating Imagen image for {slug}...")
-            # Use the same client but call imagine
-            # Note: ensure your API key has access to Imagen
-            imagen_response = client.models.generate_images(
-                model='imagen-4.0-fast-generate-001',
-                prompt=article['image_prompt'] + ", photorealistic, 8k, journalistic style, navi mumbai atmosphere",
-                config=genai.types.GenerateImagesConfig(
-                    number_of_images=1,
-                    aspect_ratio="16:9"
-                )
-            )
-            if imagen_response.generated_images:
-                generated_obj = imagen_response.generated_images[0]
-                # The object is a GeneratedImage wrapper
-                # It usually contains a PIL Image in .image if pillow is installed
-                if hasattr(generated_obj, 'image') and hasattr(generated_obj.image, 'save'):
-                     generated_obj.image.save(image_path)
-                     log(f"  ✓ Imagen generated: {slug}")
-                elif hasattr(generated_obj, 'image_bytes'):
-                     with open(image_path, 'wb') as f:
-                         f.write(generated_obj.image_bytes)
-                     log(f"  ✓ Imagen generated (bytes): {slug}")
-                else:
-                     log(f"  Imagen object unknown format: {dir(generated_obj)}")
-            else:
-                 log("  Imagen returned no images.")
-        except Exception as e:
-            log(f"  Imagen failed: {e}")
+        image_success = generate_image_from_prompt(slug, article['image_prompt'])
+        
+        if not image_success:
+            # Add to pending queue
+            log(f"  ! Image generation failed, queuing for retry: {slug}")
+            pending = load_pending_images()
+            pending[slug] = {
+                "prompt": article['image_prompt'],
+                "title": article['title'],
+                "tags": article.get('tags', []),
+                "added": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            save_pending_images(pending)
+
             # Fallback to placeholder
             try:
                 from data.image_gen import generate_placeholder_image
@@ -417,6 +498,9 @@ def git_push(message="Automated update from The Record Editor"):
 def run_cycle():
     """Single fetch-filter-publish cycle."""
     log("Checking feeds...")
+    
+    # 0. Process any pending images from previous failures
+    process_pending_images()
     
     seen = load_seen()
     
