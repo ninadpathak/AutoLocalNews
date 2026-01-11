@@ -23,5 +23,29 @@
       "Elections"
     ],
     "added": "2026-01-11 11:51:27"
+  },
+  "bjp-shiv-sena-nm": {
+    "prompt": "minimalist photojournalism, election rally in Navi Mumbai, BJP and Shiv Sena flags, faces in the crowd, gritty realism",
+    "title": "BJP, Shiv Sena Face Off in Navi Mumbai Civic Polls",
+    "tags": [
+      "Navi Mumbai",
+      "Civic Polls",
+      "BJP",
+      "Shiv Sena",
+      "Politics"
+    ],
+    "added": "2026-01-11 15:56:38"
+  },
+  "mi-wins-wpl": {
+    "prompt": "Minimalist photojournalism, victory celebration in Sector 15, CBD Belapur after MI's WPL win, Navi Mumbai vibe.",
+    "title": "MI steamrolls DC: WPL trophy stays in Mumbai",
+    "tags": [
+      "WPL",
+      "Mumbai Indians",
+      "Cricket",
+      "DY Patil Stadium",
+      "CBD Belapur"
+    ],
+    "added": "2026-01-11 15:56:47"
   }
 }
