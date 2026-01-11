@@ -58,5 +58,29 @@
       "Navi Mumbai"
     ],
     "added": "2026-01-11 16:02:19"
+  },
+  "ladki-bahin-fight": {
+    "prompt": "minimalist photojournalism, a protest sign partially visible at a political rally in Belapur, Navi Mumbai, mentioning 'Ladki Bahin Yojana' with blurred faces in the background",
+    "title": "BJP, Congress Brawl Over 'Ladki Bahin' Scheme",
+    "tags": [
+      "BJP",
+      "Congress",
+      "Ladki Bahin Yojana",
+      "Politics",
+      "Elections",
+      "NMMC"
+    ],
+    "added": "2026-01-11 16:23:37"
+  },
+  "mayor-poll-code": {
+    "prompt": "minimalist photojournalism, a stern-looking election official in Navi Mumbai, with a blurred background of political banners.",
+    "title": "Poll Code? Mayor's Promise Sparks Fury.",
+    "tags": [
+      "NMMC",
+      "election code",
+      "Panvel",
+      "politics"
+    ],
+    "added": "2026-01-11 16:23:45"
   }
 }
