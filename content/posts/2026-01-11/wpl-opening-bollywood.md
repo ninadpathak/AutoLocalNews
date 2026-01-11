@@ -1,18 +1,16 @@
 ---
-title: "Honey Singh to open WPL at DY Patil"
+title: "Bollywood Blows Up DY Patil For WPL Opener"
 date: 2026-01-11
-author: gurpreet_bajwa
-tags: ['WPL', 'DY Patil Stadium', 'Honey Singh', 'Jacqueline Fernandez', 'Harnaaz Sandhu', 'Cricket', 'Nerul']
-original_source: "https://news.google.com/rss/articles/CBMipwJBVV95cUxNT2E5TUR6bWlDZmtXeWdZY2tKdnpUeG1RaDhQMzUtbG51ZUlMUnRHMXdKaGpFcTBSNWR3c1Y3bEdJVTNrYVRSalBfYU1oN1ZIS19tYndEYTFCSUc5Z3FpUVdMc0hCM1c1aG52NEhHOURmVDMzQjhMb3h2RWRPX0dfNTVONVp0aE9OUjRYcVNIekZsV3VfeEoyeFJyZGhrZmJEZ3VlX3ZhaE5IempiT1MtOWVuMmI4NGthLUZtam11UVkwcDJpa194Yl9VTGdTd3pCWEUtVnFORjRGRWx3U0U5dVhvMWo5VHlNYlJvYmdFS21wS2RickFlM3RJWjdXakxxeDk4RmtYUVQ3V1dWZ3lfeWg3Rmt4VGtzYTlvWWRjY2ZuV19oSUdr0gGsAkFVX3lxTFB5OWxOYUFCUTE3MEFIRzBjcDI5cklQRTJsQ24zbnh5R0ZNMWRmNzdtMHlVN25CNDRJeHVHd1FOSVk1aUJyZ3JvZG9kcndvN1FjeWhaY1FUVDBqYktRRGJ2NjlCYVk0Y0x4ZlIxc21KV1FDSGtVZ0RPdGRSUlpxWTVhQTRUOHVwSHlmYVlibGRhclV1LXM3Wmw5dVZZZzZrQmhjTDAxbzRUQjZxdWJOT3g1WDRfTURZS2h0RXR3a1VfXzYzcm5aMHVfZzZvaTV1NFBNdVdVOTNVVzZhY0htajlWakxmUkktTTZNSk5vQWx3dWs2cVBYc0htbHRZWU9fYUJ0TGZJSjVKY0hXLXZvdVpTWTVJNnhHaEpFNWxOTDJHNEZ4SzVOZFE3UjZYYw?oc=5"
+author: ninad_pathak
+tags: ['WPL', 'DY Patil Stadium', 'Bollywood', 'Cricket', 'Navi Mumbai']
+original_source: "https://news.google.com/rss/articles/CBMi-AFBVV95cUxPUThIcWRSZFFCMzBabzdCTG1xTW1sdmxrODdrRFVkOFJvQ0RBcW1mQnhfYklQNE5lRHVNX0VqS1JTMDJrRWpvc29hMnBFYmJWeUM1TlFkRElXbl93S3ZDbjRXZDRGSUlzX3dfcGRlZENmaV9jVy1oSG9odDBEQTVjNDlxaUN0XzQzVEdRV3hPdGtjRmt0cm1TZjJseVdZWmFlRjU2el8zejdwMG52czc3TG1oNzJidEdBR2ZzQjd1b3J2QTI0NmJDSVozVy0wWFY3T2tyY2JZRmNjenUyZTBxQTlyck1CY2t3QXVfSUdFalNxRlV6VWF2NdIB_gFBVV95cUxNNjZjck5lc05GTWRnUU1ZUXZUYUc1WEFCUDVZMWZ6eHQ5Wng0QUxhQ2sxdHRUcjQtSklYenlTVmRFeE5vMGlPdUl4ZlVyODBtbGRieHczNVpLWVhKdXpwNEFzYmw5MFJ1Y0c2N2VLNEJGZUNYVms5VmxpbWE0MHptOXRFX3l4bHcwXzljeE50VjVOZ2wwMUlxNFdGOF9sWmY2TklSdnFCdmI3VXl4eWpNN2xPbEtTSWhkQnlUenpiQ0RkbWpXbHN0aDhPY3hicVpHS1U2QndiSVhpaHI3QXJ4bkJmZHpxbUpMZFM1QzNzZmRpN2xBN3Rxd24xNGFTdw?oc=5"
 featured_image: "/images/news/wpl-opening-bollywood.png"
-image_prompt: "minimalist photojournalism, wide shot of DY Patil Stadium during WPL opening ceremony, crowd visible, Navi Mumbai vibe"
+image_prompt: "Minimalist photojournalism, wide shot of the WPL opening ceremony at DY Patil Stadium, Harnaaz Sandhu on stage, fireworks in the background, Navi Mumbai vibe."
 ---
-> **TLDR**: The WPL 2026 opening ceremony is gonna be lit. Honey Singh, Jacqueline Fernandez, and Harnaaz Sandhu will be there, so get ready to groove, even if you don't understand cricket.
+> **TLDR**: The WPL 2026 opening ceremony at DY Patil was a Bollywood extravaganza. Harnaaz Sandhu, Jacqueline Fernandez, and Honey Singh all performed, because of course they did.
 
-The Board of Control for Cricket in India (BCCI) is pulling out all the stops for the Women's Premier League (WPL) 2026 opening ceremony. The event, scheduled for March 5th at the DY Patil Stadium in Nerul, promises Bollywood glitz alongside cricket action.
+The DY Patil Stadium got a Bollywood-sized shot of adrenaline last night, kicking off the 2026 Women's Premier League. Harnaaz Sandhu graced the stage, because apparently being Miss Universe wasn't enough excitement for one lifetime. Jacqueline Fernandez brought the dance moves (and probably a few headlines), and Honey Singh… well, he brought Honey Singh.
 
-Honey Singh is headlining. Jacqueline Fernandez will be there too. And Harnaaz Sandhu will be there, bringing some serious beauty-queen vibes to Navi Mumbai.
+Reportedly, ₹5 Crore was spent on pyrotechnics alone. That's right, 5 Crore. Because nothing says "women's cricket" like blowing up a small fortune in Sector 7.
 
-Will the performances be good? Who cares! It's a chance to see some celebrities and pretend you understand the rules of cricket. Gates open at 5:30 PM; the first match starts at 7:30 PM. Get ready for some noise.
-
-Tickets are available online, starting at ₹499. That's about the same price as two butter chickens. Choose wisely.
+The crowd went wild, the players looked vaguely embarrassed, and the BCCI executives probably popped champagne corks in their VIP boxes. The WPL is officially here, folks. May the best team win (and may the eardrums of Sector 12 residents recover swiftly).
