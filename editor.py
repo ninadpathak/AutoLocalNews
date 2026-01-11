@@ -11,11 +11,13 @@ import hashlib
 import yaml
 import feedparser
 import trafilatura
+import glob
 from datetime import datetime
 import subprocess
 from google import genai
 from slugify import slugify
 from dotenv import load_dotenv
+from difflib import SequenceMatcher
 
 load_dotenv()
 
@@ -70,7 +72,6 @@ def load_pending_images():
         except Exception:
             return {}
     return {}
-
 
 def save_pending_images(pending):
     """Save pending image generation tasks."""
@@ -263,8 +264,6 @@ def check_newsworthy(items):
     CURRENT DATE: {today_date}
     
     Only accept REAL, RECENT NEWS. Old news recycled as new should be rejected.
-    
-    You are a STRICT news editor for a Navi Mumbai local news site. Only accept REAL NEWS.
 
 STRICT ACCEPT CRITERIA (must meet ALL):
 - Must be an actual NEWS EVENT (something happened, was announced, or was discovered)
@@ -274,46 +273,40 @@ STRICT ACCEPT CRITERIA (must meet ALL):
 Examples of REAL NEWS: accidents, crimes, government announcements, infrastructure updates, business openings/closures, civic issues, weather events, official events
 
 STRICT REJECT (err on side of rejection):
-- Personal observations ("nice weather today", "sun looks good")
-- Questions or polls ("best burger?", "anyone play tennis?")
-- Classifieds/buy-sell/promotions
-- Memes, jokes, casual social posts
-- Volunteer/charity callouts (not news)
-- General Mumbai or national news
-- Opinion pieces without news value
-- Lifestyle recommendations
+- Personal observations, Questions, Classifieds, Memes, Opinion pieces without news value.
+- General Mumbai or national news that doesn't specifically impact Navi Mumbai nodes.
 
 {items_text}
 
 Be VERY strict. When in doubt, REJECT.
-Reply JSON: {{"results": [{{"item": 1, "accept": true/false, "reason": "brief reason"}}, ...]}}"""
+Reply JSON: {{'results': [{{'item': 1, 'accept': true/false, 'reason': 'brief reason'}}, ...]}} """
     
     try:
         response = client.models.generate_content(
             model=MODEL, contents=prompt,
-            config={'response_mime_type': 'application/json'}
+            config={{'response_mime_type': 'application/json'}}
         )
         result = json.loads(response.text)
-        return {r['item'] - 1: (r['accept'], r.get('reason', '')) for r in result.get('results', [])}
+        return {{r['item'] - 1: (r['accept'], r.get('reason', '')) for r in result.get('results', [])}}
     except Exception as e:
         log(f"  Filter error: {e}")
-        return None  # Return None on error so we don't mark items as seen
+        return None
 
 
 def write_article(item, tone_guide):
     """Generate article content."""
-    prompt = f"""Rewrite for "The Navi Mumbai Record", Navi Mumbai's independent local news site.
+    prompt = f"""Rewrite for \"The Navi Mumbai Record\", Navi Mumbai's independent local news site. 
     
 VOICE & TONE (STRICT):
 {tone_guide}
 
 CRITICAL INSTRUCTIONS:
-- EDITORIAL STANCE: We are "The Record". Smart, simple, and real.
+- EDITORIAL STANCE: We are \"The Record\". Smart, simple, and real.
 - TONE: Casual, smart, and FULL OF PERSONALITY. Write like a real person, not a journalist.
-- LANGUAGE: SIMPLE WORDS ONLY. No big words. No "news speak".
+- LANGUAGE: SIMPLE WORDS ONLY. No big words. No \"news speak\".
 - STRICT BANNED WORDS: Crucial, Critical, Landscape, Pivotal, Unprecedented, Spearheaded, Delve, Facet, Realm, Synergize, Robust, Tapestry, Commence, Utilize.
 - MAX 3 SENTENCES per paragraph. Keep it fast.
-- NO "Journalese": Avoid "reportedly", "sources say", "garnered attention".
+- NO \"Journalese\": Avoid \"reportedly\", \"sources say\", \"garnered attention\".
 - NO Rhetorical Questions.
 - MANDATORY: Start with a `> **TLDR**: ...` blockquote. One sentence of hard news, one sentence of personality.
 - STRICT STRUCTURE:
@@ -333,7 +326,7 @@ Ensure the response is VALID JSON. Escape all double quotes inside strings."""
     try:
         response = client.models.generate_content(
             model=MODEL, contents=prompt,
-            config={'response_mime_type': 'application/json'}
+            config={{'response_mime_type': 'application/json'}}
         )
         text = response.text.strip()
         # Cleanup potential markdown formatting if the model adds it despite mime_type
@@ -392,14 +385,15 @@ def save_article(article, item):
             except:
                 pass
 
-    content = f"""---
-title: "{article['title'].replace('"', '\\"')}"
+    content = f"""
+---
+title: "{article['title'].replace('"', '\"')}"
 date: {today}
 author: {random.choice(AUTHORS)}
 tags: {article['tags']}
 original_source: "{item['link']}"
 featured_image: "/images/news/{slug}.png"
-image_prompt: "{article.get('image_prompt', '').replace('"', '\\"')}"
+image_prompt: "{article.get('image_prompt', '').replace('"', '\"')}"
 ---
 {article['content']}
 """
@@ -495,17 +489,24 @@ def git_push(message="Automated update from The Record Editor"):
         log(f"  Git error: {e}")
 
 
+def is_similar(a, b):
+    return SequenceMatcher(None, a.lower(), b.lower()).ratio() > 0.85
+
 def run_cycle():
     """Single fetch-filter-publish cycle."""
     log("Checking feeds...")
     
-    # 0. Process any pending images from previous failures
     process_pending_images()
-    
     seen = load_seen()
     
-    # 1. Fetch new items
-    # Limit to 5 items per cycle to prevent timeouts and crashes
+    # Load existing titles for similarity check
+    import build
+    existing_posts = []
+    for pf in glob.glob(os.path.join(POSTS_DIR, '**', '*.md'), recursive=True):
+        meta, _ = build.parse_md(pf)
+        if meta.get('title'):
+            existing_posts.append(meta['title'])
+
     items = fetch_feeds(seen, limit=5)
     if not items:
         log("  No new items.")
@@ -518,46 +519,48 @@ def run_cycle():
     
     if results is None:
         log("  Filter failed - will retry next cycle.")
-        return  # Don't mark as seen on API error
+        return
     
-    # Log all decisions
     log("\n  === FILTER RESULTS ===")
+    newsworthy = []
     for i, item in enumerate(items):
         accept, reason = results.get(i, (False, "no result"))
+        
+        # Additional Similarity Check
+        if accept:
+            if any(is_similar(item['title'], et) for et in existing_posts):
+                accept = False
+                reason = "Similar story already exists."
+        
         status = "✓ ACCEPT" if accept else "✗ REJECT"
         log(f"  {status}: {item['title'][:50]}...")
         log(f"           Reason: {reason}")
+        
+        if accept:
+            newsworthy.append((i, item))
+            existing_posts.append(item['title']) # Add to local list to prevent duplicates within same cycle
     log("  ======================\n")
-    
-    newsworthy = [(i, item) for i, item in enumerate(items) if results.get(i, (False, ''))[0]]
     
     if not newsworthy:
         log("  No newsworthy items this cycle.")
-        # Mark all as seen since they were processed
         for item in items:
             seen.add(item['hash'])
         save_seen(seen)
         return
-    
-    log(f"  {len(newsworthy)} items accepted for publishing.")
 
-    # Mark rejected items as seen immediately so we don't re-process them if we crash
     processed_indices = set(i for i, _ in newsworthy)
     for i, item in enumerate(items):
         if i not in processed_indices:
             seen.add(item['hash'])
     save_seen(seen)
     
-    # 3. Write and publish
     tone_guide = load_tone_guide()
     published_titles = []
     
     for _, item in newsworthy:
         log(f"  Writing: {item.get('title', '')[:40]}...")
         
-        # Double check to avoid reprocessing if we restarted
         if item['hash'] in seen:
-            log(f"  Skipping already seen: {item.get('title', '')[:20]}")
             continue
 
         article = write_article(item, tone_guide)
@@ -567,34 +570,24 @@ def run_cycle():
             log(f"  ✓ Published: {slug}")
             published_titles.append(article.get('title', slug))
         
-        # Mark as seen after processing (success or fail) to avoid sticking
         seen.add(item['hash'])
         save_seen(seen)
-        
-        # Rate limit kindness
         time.sleep(5)
     
     published_count = len(published_titles)
-    
-    # 4. Update AQI
     update_aqi()
     
-    # 5. Rebuild site
     if published_count > 0:
         log(f"  Rebuilding site for {published_count} new articles...")
         import build
         build.build_site()
         
-        # 6. Push to GitHub
         summary = ", ".join(published_titles[:3])
         if len(published_titles) > 3:
             summary += f" and {len(published_titles)-3} more"
         
         git_push(f"New articles: {summary}")
     else:
-        # Even if no articles, we might want to rebuild if AQI updated?
-        # But the user only asked for push on new articles.
-        # We'll just build locally to keep public/ fresh.
         import build
         build.build_site()
 

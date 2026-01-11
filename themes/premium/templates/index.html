@@ -3,6 +3,12 @@
 {% block content %}
 <div class="main-column">
     <!-- Big Featured Article -->
+    {% if current_tag %}
+    <div style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--color-accent);">
+        <h1 style="font-family: var(--font-display); font-size: 2rem; margin: 0;">Topic: {{ current_tag }}</h1>
+    </div>
+    {% endif %}
+
     {% if latest_news %}
     {% set featured = latest_news[0] %}
     <article class="featured-article">
