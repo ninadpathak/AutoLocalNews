@@ -92,6 +92,15 @@
                 </div>
 
                 <div class="sidebar-section">
+                    <h4 class="sidebar-title">Trending Topics</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        {% for tag in site.tags %}
+                        <a href="{{ tag.url }}" style="font-size: 0.75rem; text-decoration: underline; color: var(--color-text);">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
                     <h4 class="sidebar-title">Signal Alerts</h4>
                     <p style="font-size: 0.75rem; color: var(--color-text-light);">
                         Join the grid for weekly deep-dives into CIDCO policies and Node shifts.

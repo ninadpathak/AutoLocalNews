@@ -9,6 +9,8 @@ import yaml
 import markdown
 import jinja2
 from datetime import datetime
+from difflib import SequenceMatcher
+from slugify import slugify
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONTENT_DIR = os.path.join(BASE_DIR, 'content')
@@ -35,6 +37,11 @@ def parse_md(filepath):
     return {}, markdown.markdown(text)
 
 
+def is_similar(a, b):
+    """Check if two strings are similar."""
+    return SequenceMatcher(None, a.lower(), b.lower()).ratio() > 0.85
+
+
 def build_site():
     print(f"Building site...")
     
@@ -54,12 +61,35 @@ def build_site():
         meta, bio = parse_md(af)
         authors[slug] = {**meta, 'bio_html': bio, 'slug': slug}
     
-    # Load posts
+    # Load posts with Deduplication
     posts = []
-    for pf in glob.glob(os.path.join(CONTENT_DIR, 'posts', '**', '*.md'), recursive=True):
+    seen_urls = set()
+    seen_titles = [] # List of (title, slug)
+    
+    all_files = glob.glob(os.path.join(CONTENT_DIR, 'posts', '**', '*.md'), recursive=True)
+    # Sort by mtime reverse to process newest first (prefer keeping newest version)
+    all_files.sort(key=os.path.getmtime, reverse=True)
+    
+    for pf in all_files:
         meta, content = parse_md(pf)
         slug = os.path.basename(pf).replace('.md', '')
         date = str(meta.get('date', datetime.now().strftime('%Y-%m-%d')))
+        
+        # Deduplication Checks
+        # 1. Exact Source Match
+        src = meta.get('original_source')
+        if src:
+            if src in seen_urls:
+                # print(f"Skipping duplicate source: {slug}")
+                continue
+            seen_urls.add(src)
+            
+        # 2. Similar Title Match
+        title = meta.get('title', '')
+        if any(is_similar(title, t) for t, _ in seen_titles):
+            # print(f"Skipping similar title: {slug}")
+            continue
+        seen_titles.append((title, slug))
         
         posts.append({
             **meta,
@@ -83,9 +113,23 @@ def build_site():
         with open(ads_path) as f:
             ads_data = yaml.safe_load(f)
 
+    # Collect Tags
+    all_tags = {}
+    for post in posts:
+        for tag in post.get('tags', []):
+            if tag not in all_tags:
+                all_tags[tag] = []
+            all_tags[tag].append(post)
+            
     # Update config with dynamic data
     config['aqi'] = aqi_data
     config['ads'] = ads_data
+    config['tags'] = []
+    for tag in sorted(list(all_tags.keys())):
+        config['tags'].append({
+            'name': tag,
+            'url': f"/tag/{slugify(tag)}.html"
+        })
     
     # Sort posts by date descending
     posts.sort(key=lambda x: str(x.get('date', '')), reverse=True)
@@ -131,11 +175,50 @@ def build_site():
             latest_news=page_posts, 
             title=config['site_name'],
             prev_page=prev_page,
-            next_page=next_page
+            next_page=next_page,
+            is_index=True
         )
         
         with open(os.path.join(PUBLIC_DIR, filename), 'w') as f:
             f.write(output)
+            
+    # Render Tag Pages (Paginated)
+    os.makedirs(os.path.join(PUBLIC_DIR, 'tag'), exist_ok=True)
+    for tag, tag_posts in all_tags.items():
+        tag_slug = slugify(tag)
+        tag_posts.sort(key=lambda x: str(x.get('date', '')), reverse=True)
+        
+        tag_total = len(tag_posts)
+        tag_pages = (tag_total + POSTS_PER_PAGE - 1) // POSTS_PER_PAGE
+        if tag_pages == 0: tag_pages = 1
+        
+        for p in range(1, tag_pages + 1):
+            start = (p - 1) * POSTS_PER_PAGE
+            end = start + POSTS_PER_PAGE
+            p_posts = tag_posts[start:end]
+            
+            if p == 1:
+                fname = f"{tag_slug}.html"
+                prev = None
+            else:
+                fname = f"{tag_slug}_{p}.html"
+                prev = f"/tag/{tag_slug}.html" if p == 2 else f"/tag/{tag_slug}_{p-1}.html"
+            
+            if p < tag_pages:
+                nxt = f"/tag/{tag_slug}_{p+1}.html"
+            else:
+                nxt = None
+                
+            output = env.get_template('index.html').render(
+                site=config,
+                latest_news=p_posts,
+                title=f"Topic: {tag}",
+                prev_page=prev,
+                next_page=nxt,
+                current_tag=tag
+            )
+            with open(os.path.join(PUBLIC_DIR, 'tag', fname), 'w') as f:
+                f.write(output)
     
     # Render archive
     output = env.get_template('archive.html').render(site=config, posts=posts, title="Archives")
