@@ -319,5 +319,29 @@
       "MCC"
     ],
     "added": "2026-01-11 11:14:59"
+  },
+  "shinde-monopoly-navi-mumbai": {
+    "prompt": "minimalist photojournalism, Eknath Shinde addressing a political rally in Vashi, Navi Mumbai, banners in Marathi, crowd scene",
+    "title": "Shinde Tells Navi Mumbai: End Political 'Monopoly'",
+    "tags": [
+      "Eknath Shinde",
+      "Navi Mumbai Politics",
+      "Shiv Sena",
+      "NCP",
+      "Elections"
+    ],
+    "added": "2026-01-11 11:51:27"
+  },
+  "wpl-mi-rcb": {
+    "prompt": "Minimalist photojournalism, wide shot of DY Patil Stadium packed with fans during a WPL match, Mumbai Indians Women vs Royal Challengers Bangalore Women, dusk lighting, focus on the energy of the crowd",
+    "title": "RCB? MI? WPL Clash Returns To DY Patil!",
+    "tags": [
+      "WPL",
+      "MI Women",
+      "RCB Women",
+      "DY Patil",
+      "Cricket"
+    ],
+    "added": "2026-01-11 11:51:35"
   }
 }
