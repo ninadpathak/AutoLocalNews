@@ -284,10 +284,10 @@ Reply JSON: {{'results': [{{'item': 1, 'accept': true/false, 'reason': 'brief re
     try:
         response = client.models.generate_content(
             model=MODEL, contents=prompt,
-            config={{'response_mime_type': 'application/json'}}
+            config=genai.types.GenerateContentConfig(response_mime_type='application/json')
         )
         result = json.loads(response.text)
-        return {{r['item'] - 1: (r['accept'], r.get('reason', '')) for r in result.get('results', [])}}
+        return {r['item'] - 1: (r['accept'], r.get('reason', '')) for r in result.get('results', [])}
     except Exception as e:
         log(f"  Filter error: {e}")
         return None
@@ -326,7 +326,7 @@ Ensure the response is VALID JSON. Escape all double quotes inside strings."""
     try:
         response = client.models.generate_content(
             model=MODEL, contents=prompt,
-            config={{'response_mime_type': 'application/json'}}
+            config=genai.types.GenerateContentConfig(response_mime_type='application/json')
         )
         text = response.text.strip()
         # Cleanup potential markdown formatting if the model adds it despite mime_type
@@ -607,5 +607,5 @@ if __name__ == "__main__":
         except Exception as e:
             log(f"Error: {e}")
         
-        print("\nSleeping 5 minutes...")
-        time.sleep(300)
+        print("\nSleeping 4 hours...")
+        time.sleep(14400)
