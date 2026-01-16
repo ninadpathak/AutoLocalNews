@@ -177,29 +177,20 @@ def fetch_content(url):
 
 
 def fetch_feeds(seen, limit=10):
-    """Fetch all RSS feeds, return new items (don't mark as seen yet)."""
+    """Fetch all RSS feeds, return basic info for all new items."""
     with open(SOURCES_FILE) as f:
         sources = yaml.safe_load(f)
     
-    new_items = []
-    
-    # Date-based filtering constants
+    all_candidates = []
     MAX_DAYS_OLD = 2
     
     for source in sources.get('feeds', []):
-        if len(new_items) >= limit:
-            break
-
         url = source['url']
         try:
             feed = feedparser.parse(url, agent=USER_AGENT)
             log(f"  [{len(feed.entries)} items] {url[:50]}...")
             
             for entry in feed.entries:
-                if len(new_items) >= limit:
-                    break
-
-                # 1. Date Check (Critical)
                 if hasattr(entry, 'published_parsed'):
                      published_tm = entry.published_parsed
                 elif hasattr(entry, 'updated_parsed'):
@@ -209,44 +200,43 @@ def fetch_feeds(seen, limit=10):
                 
                 if published_tm:
                     published_dt = datetime.fromtimestamp(time.mktime(published_tm))
-                    days_diff = (datetime.now() - published_dt).days
-                    if days_diff > MAX_DAYS_OLD:
-                        # log(f"    Skipping old item: {entry.get('title')} ({days_diff} days old)")
+                    if (datetime.now() - published_dt).days > MAX_DAYS_OLD:
                         continue
                 
-                # Basic link from feed
                 feed_link = entry.get('link', '')
-                if not feed_link:
-                    continue
+                if not feed_link: continue
 
-                # Hash based on feed link first to catch duplicates early
-                # But we might update the link later.
-                # Ideally we hash the final link, but we don't want to fetch if seen.
-                # So we stick to hashing the feed link for seen-check.
                 item_hash = hashlib.md5(feed_link.encode()).hexdigest()
-                if item_hash in seen:
-                    continue
+                if item_hash in seen: continue
                 
-                title = entry.get('title', '')
-                
-                # Get full content and RESOLVED link
-                full_content, final_link = fetch_content(feed_link)
-                
-                # Use final_link if we got it, otherwise fallback to feed_link
-                actual_link = final_link if final_link else feed_link
-                
-                new_items.append({
+                all_candidates.append({
                     'hash': item_hash,
-                    'title': title,
-                    'link': actual_link,
-                    'summary': full_content or entry.get('summary', ''),
+                    'title': entry.get('title', ''),
+                    'link': feed_link,
+                    'summary': entry.get('summary', ''),
                     'source_url': url
                 })
-                
         except Exception as e:
             log(f"  Feed error: {e}")
     
-    return new_items
+    if not all_candidates:
+        return []
+
+    # Shuffle to get variety from all sources
+    random.shuffle(all_candidates)
+    
+    # Only fetch full content for a small pool to keep it snappy
+    pool = all_candidates[:limit * 3]
+    final_items = []
+    
+    log(f"  Fetching full content for {len(pool)} candidates...")
+    for item in pool:
+        full_content, final_link = fetch_content(item['link'])
+        item['summary'] = full_content or item['summary']
+        item['link'] = final_link or item['link']
+        final_items.append(item)
+        
+    return final_items[:limit]
 
 
 def check_newsworthy(items):
@@ -347,7 +337,9 @@ Ensure the response is VALID JSON. Escape all double quotes inside strings."""
 
 def save_article(article, item):
     """Save article as markdown."""
-    today = datetime.now().strftime('%Y-%m-%d')
+    now = datetime.now()
+    today = now.strftime('%Y-%m-%d')
+    current_time = now.strftime('%H:%M:%S')
     date_dir = os.path.join(POSTS_DIR, today)
     os.makedirs(date_dir, exist_ok=True)
     
@@ -385,10 +377,10 @@ def save_article(article, item):
             except:
                 pass
 
-    content = f"""
----
+    content = f"""---
 title: "{article['title'].replace('"', '\"')}"
 date: {today}
+time: "{current_time}"
 author: {random.choice(AUTHORS)}
 tags: {article['tags']}
 original_source: "{item['link']}"

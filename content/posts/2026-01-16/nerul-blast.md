@@ -1,4 +1,3 @@
-
 ---
 title: "Nerul: Multiple Cylinder Blasts Rock Sector 20"
 date: 2026-01-16

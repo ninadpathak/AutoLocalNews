@@ -131,8 +131,8 @@ def build_site():
             'url': f"/tag/{slugify(tag)}.html"
         })
     
-    # Sort posts by date descending
-    posts.sort(key=lambda x: str(x.get('date', '')), reverse=True)
+    # Sort posts by date and time descending
+    posts.sort(key=lambda x: (str(x.get('date', '')), str(x.get('time', '00:00:00'))), reverse=True)
     
     # Generate dynamic ticker from latest news
     try:
